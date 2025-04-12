@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <curl/curl.h>
@@ -53,6 +53,7 @@ int main() {
     setlocale(0, "Ukrainian");
 
     string url_cat = "https://cataas.com/cat"; // URL для котиків
+    string url_dog = "https://dog.ceo/api/breeds/image/random"; // URL для собак
     string base_directory = "./images/";
     int count = 0;
 
@@ -68,7 +69,7 @@ int main() {
         return 1;
     }
 
-    cout << "Натискайте Enter, щоб завантажити випадкову картинку кота." << endl;
+    cout << "Натискайте Enter, щоб завантажити випадкову картинку кота або собаки." << endl;
 
     while (true) {
         cin.get();
@@ -81,7 +82,10 @@ int main() {
 
         string full_file_name = base_directory + file_name;
 
-        if (download_image(url_cat, full_file_name)) {
+        // Генерация случайного выбора: кот или собака
+        string chosen_url = rand() % 2 == 0 ? url_cat : url_dog;
+
+        if (download_image(chosen_url, full_file_name)) {
             cout << "Завантажено зображення в файл: " << full_file_name << endl;
         }
         else {
